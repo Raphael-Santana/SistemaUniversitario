@@ -1,7 +1,6 @@
 package service;
 
 import armazenamento.Professor_db;
-import models.Acoes;
 import models.Professor;
 
 import java.util.ArrayList;
