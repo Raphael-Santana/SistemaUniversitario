@@ -12,33 +12,16 @@ public class Armazenamento {
         alunos = new ArrayList<>();
     }
 
+    // Métodos
     public void adicionarAluno(Aluno aluno) {
         alunos.add(aluno);
     }
 
-    public void removerAluno(int matricula) {
-        Aluno alunoARemover = null;
-
-        for (Aluno aluno : alunos) {
-            if (aluno.getMatricula() == matricula) {
-                alunoARemover = aluno;
-                break;
-            }
-        }
-
-        if (alunoARemover != null) {
-            alunos.remove(alunoARemover);
-            System.out.println("--------------------");
-            System.out.println("Aluno removido.");
-            System.out.println("--------------------");
-        } else {
-            System.out.println("--------------------");
-            System.out.println("Aluno com matrícula " + matricula + " não encontrado.");
-            System.out.println("--------------------");
-        }
+    public void removerAluno(Aluno aluno) {
+        alunos.remove(aluno);
     }
 
-    public ArrayList<Aluno> listarAlunos() {
+    public ArrayList<Aluno> getAlunos() {
         return alunos;
     }
 }

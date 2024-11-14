@@ -49,16 +49,37 @@ public class AlunoService {
         armazenamento.adicionarAluno(aluno);
     }
 
-
     public void removerAluno() {
         System.out.println("Digite o nome da matrícula do aluno: ");
         int matricula = scanner.nextInt();
-        armazenamento.removerAluno(matricula);
+
+        // Pega a lista de alunos armazenados
+        ArrayList<Aluno> alunos = armazenamento.getAlunos();
+
+        Aluno alunoARemover = null;
+
+        for (Aluno aluno : alunos) {
+            if (aluno.getMatricula() == matricula) {
+                alunoARemover = aluno;
+                break;
+            }
+        }
+
+        // Se caso existir o aluno, remove ele
+        if (alunoARemover != null) {
+            armazenamento.removerAluno(alunoARemover);
+            System.out.println("--------------------");
+            System.out.println("Aluno removido.");
+            System.out.println("--------------------");
+        } else {
+            System.out.println("--------------------");
+            System.out.println("Aluno com matrícula " + matricula + " não encontrado.");
+            System.out.println("--------------------");
+        }
     }
 
-
     public void exibirRelatorioAluno() {
-        ArrayList<Aluno> alunos = armazenamento.listarAlunos();
+        ArrayList<Aluno> alunos = armazenamento.getAlunos();
 
         if (alunos == null || alunos.isEmpty()) {
             System.out.println("--------------------");
