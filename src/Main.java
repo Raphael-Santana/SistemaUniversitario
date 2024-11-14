@@ -1,21 +1,21 @@
-import local_db.Armazenamento;
+import models.Professor;
 import service.AlunoService;
+import service.ProfessorService;
 
 public class Main {
     public static void main(String[] args) {
 
-        // Instanciando o armazenamento e o Service da classe
-        Armazenamento ar = new Armazenamento();
-        AlunoService alunoService = new AlunoService(ar);
+        // Instanciando o Service da classe
+        ProfessorService professorService = new ProfessorService();
 
         // Teste simples de funcionamento
-        alunoService.cadastrarAluno();
+        professorService.cadastrar();
         System.out.println("--------------------");
-        System.out.println("Aluno Cadastrado");
+        System.out.println("Professor Cadastrado");
         System.out.println("--------------------");
-        alunoService.exibirRelatorioAluno();
-        alunoService.removerAluno();
-        alunoService.exibirRelatorioAluno();
+        professorService.exibirRelatorio();
+        professorService.remover();
+        professorService.exibirRelatorio();
 
     }
 }

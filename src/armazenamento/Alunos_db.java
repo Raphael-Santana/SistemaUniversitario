@@ -1,23 +1,23 @@
-package local_db;
+package armazenamento;
 
 import java.util.ArrayList;
 import models.Aluno;
 
-public class Armazenamento {
+public class Alunos_db {
 
     private final ArrayList<Aluno> alunos;
 
     // Construtor
-    public Armazenamento() {
+    public Alunos_db() {
         alunos = new ArrayList<>();
     }
 
     // Métodos
-    public void adicionarAluno(Aluno aluno) {
+    public void adicionar(Aluno aluno) {
         alunos.add(aluno);
     }
 
-    public void removerAluno(Aluno aluno) {
+    public void remover(Aluno aluno) {
         alunos.remove(aluno);
     }
 

@@ -2,67 +2,20 @@ package models;
 
 import models.Pessoa;
 
-public class Aluno implements Pessoa {
-    private String nome;
-    private String endereco;
-    private String email;
-    private int telefone;
+public class Aluno extends Pessoa {
     private int matricula;
     private int periodo;
     private String curso;
 
     // Construtor
     public Aluno(String nome, String endereco, String email, int telefone, int matricula, int periodo, String curso) {
-        this.nome = nome;
-        this.endereco = endereco;
-        this.email = email;
-        this.telefone = telefone;
+        super(nome, endereco, email, telefone);
         this.matricula = matricula;
         this.periodo = periodo;
         this.curso = curso;
     }
 
-    // Métodos da interface Pessoa
-    @Override
-    public String getNome() {
-        return nome;
-    }
-
-    @Override
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    @Override
-    public String getEndereco() {
-        return endereco;
-    }
-
-    @Override
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    @Override
-    public String getEmail() {
-        return email;
-    }
-
-    @Override
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public int getTelefone() {
-        return telefone;
-    }
-
-    @Override
-    public void setTelefone(int telefone) {
-        this.telefone = telefone;
-    }
-
+    // Getters and Setters
     public int getMatricula() {
         return matricula;
     }
@@ -87,10 +40,10 @@ public class Aluno implements Pessoa {
         this.curso = curso;
     }
 
-
+    // ToString para apresentação de informações
     @Override
     public String toString() {
-        return "Aluno: " + this.nome +
+        return "Aluno: " + getNome() +
                 " / Matrícula: " + this.matricula +
                 " / Período: " + this.periodo +
                 " / Curso: " + this.curso;

@@ -1,23 +1,25 @@
 package service;
 
-import local_db.Armazenamento;
+import armazenamento.Alunos_db;
+import models.Acoes;
 import models.Aluno;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AlunoService {
+public class AlunoService implements Acoes {
 
-    private final Armazenamento armazenamento;
+    private final Alunos_db armazenamento;
 
     // Construtor
-    public AlunoService(Armazenamento armazenamento) {
-        this.armazenamento = armazenamento;
+    public AlunoService() {
+        this.armazenamento = new Alunos_db();
     }
 
     Scanner scanner = new Scanner(System.in);
 
-    public void cadastrarAluno() {
+    @Override
+    public void cadastrar() {
         System.out.println("Digite o nome do aluno: ");
         String nome = scanner.nextLine();
 
@@ -46,10 +48,11 @@ public class AlunoService {
         String curso = scanner.nextLine();
 
         Aluno aluno = new Aluno(nome, endereco, email, telefone, matricula, periodo, curso);
-        armazenamento.adicionarAluno(aluno);
+        armazenamento.adicionar(aluno);
     }
 
-    public void removerAluno() {
+    @Override
+    public void remover() {
         System.out.println("Digite o nome da matrícula do aluno: ");
         int matricula = scanner.nextInt();
 
@@ -67,7 +70,7 @@ public class AlunoService {
 
         // Se caso existir o aluno, remove ele
         if (alunoARemover != null) {
-            armazenamento.removerAluno(alunoARemover);
+            armazenamento.remover(alunoARemover);
             System.out.println("--------------------");
             System.out.println("Aluno removido.");
             System.out.println("--------------------");
@@ -78,7 +81,8 @@ public class AlunoService {
         }
     }
 
-    public void exibirRelatorioAluno() {
+    @Override
+    public void exibirRelatorio() {
         ArrayList<Aluno> alunos = armazenamento.getAlunos();
 
         if (alunos == null || alunos.isEmpty()) {
