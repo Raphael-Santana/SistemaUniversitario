@@ -35,7 +35,7 @@ public class Main {
             System.out.println("5. Gerenciar cursos");
             System.out.println("6. Gerenciar disciplinas");
             System.out.println("7. Listar informações de alunos");
-            System.out.println("8. Listar informações dos funcionários funcionários");
+            System.out.println("8. Listar informações dos funcionários");
             System.out.println("9. Listar informações das coordenações");
             System.out.println("10. Listar informações das secretarias");
             System.out.println("11. Listar informações dos cursos");
