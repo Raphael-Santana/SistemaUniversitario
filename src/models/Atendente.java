@@ -23,8 +23,7 @@ public class Atendente extends Funcionario{
 
     @Override
     public String toString() {
-        return "Atendente: " + getNome() +
-                " / Responsabilidade: " + this.responsabilidade +
-                " / Salário: R$ " + getSalario();
+        return super.toString() +
+                " / Responsabilidade: " + this.responsabilidade;
     }
 }

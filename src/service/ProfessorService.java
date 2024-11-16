@@ -1,6 +1,7 @@
 package service;
 
-import armazenamento.Professor_db;
+import armazenamento.Armazenamento;
+import models.Disciplina;
 import models.Professor;
 
 import java.util.ArrayList;
@@ -8,10 +9,10 @@ import java.util.Scanner;
 
 public class ProfessorService implements Acoes {
 
-    private final Professor_db armazenamento;
+    private final Armazenamento armazenamento;
 
-    public ProfessorService() {
-        this.armazenamento = new Professor_db();
+    public ProfessorService(Armazenamento armazenamento) {
+        this.armazenamento = armazenamento;
     }
 
     Scanner scanner = new Scanner(System.in);
@@ -40,12 +41,40 @@ public class ProfessorService implements Acoes {
 
         scanner.nextLine();
 
+        System.out.println("Escolha as disciplinas: ");
+
+        ArrayList<Disciplina> disciplinas = armazenamento.getDisciplinas();
+
+        // Exibição das disciplinas
+        int count = 1;
+        for (Disciplina disciplina : disciplinas) {
+            System.out.println(count + ". Nome: " + disciplina.getNome());
+            System.out.println("--------------------");
+            count++;
+        }
+
+        // Solicita as escolhas do usuário
+        System.out.print("Selecione os números (separados por vírgula): ");
+        String input = scanner.nextLine();
+
+        // Processa as escolhas
+        String[] indicesEscolhidos = input.split(",");
+        ArrayList<Disciplina> disciplinasEscolhidas = new ArrayList<>();
+
+        // Adiciona as disciplinas escolhidas ao ArrayList
+        for (String indiceStr : indicesEscolhidos) {
+            int indice = Integer.parseInt(indiceStr.trim()) - 1;
+            disciplinasEscolhidas.add(disciplinas.get(indice));
+        }
+
         System.out.println("Digite a titulação: ");
         String titulacao = scanner.nextLine();
 
-        Professor professor = new Professor(nome, endereco, email, telefone, horarioTrabalho, titulacao);
+        Professor professor = new Professor(nome, endereco, email, telefone, horarioTrabalho, disciplinasEscolhidas, titulacao);
         professor.definirSalario(salario);
-        armazenamento.adicionar(professor);
+        armazenamento.adicionarProfessor(professor);
+        System.out.println("PROFESSOR CADASTRADO");
+        System.out.println("--------------------");
     }
 
 
@@ -68,13 +97,13 @@ public class ProfessorService implements Acoes {
 
         // Se o professor existir, remove-o
         if (professorARemover != null) {
-            armazenamento.remover(professorARemover);
+            armazenamento.removerProfessor(professorARemover);
             System.out.println("--------------------");
-            System.out.println("Professor removido.");
+            System.out.println("PROFESSOR REMOVIDO");
             System.out.println("--------------------");
         } else {
             System.out.println("--------------------");
-            System.out.println("Professor com e-mail " + email + " não encontrado.");
+            System.out.println("PROFESSOR COM EMAIL " + email + " NÃO ENCONTRADO");
             System.out.println("--------------------");
         }
     }
@@ -86,13 +115,13 @@ public class ProfessorService implements Acoes {
 
         if (professores == null || professores.isEmpty()) {
             System.out.println("--------------------");
-            System.out.println("Nenhum professor encontrado.");
+            System.out.println("NENHUM PROFESSOR ENCONTRADO");
             System.out.println("--------------------");
             return;
         }
 
-        System.out.println("Relatório dos Alunos:");
-
+        System.out.println("RELATÓRIO DOS PROFESSORES:");
+        System.out.println();
         for (Professor professor : professores) {
             System.out.println(professor.toString());
             System.out.println("--------------------");

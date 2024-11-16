@@ -1,18 +1,19 @@
 package service;
 
-import armazenamento.Alunos_db;
+import armazenamento.Armazenamento;
 import models.Aluno;
+import models.Disciplina;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AlunoService implements Acoes {
 
-    private final Alunos_db armazenamento;
+    private final Armazenamento armazenamento;
 
     // Construtor
-    public AlunoService() {
-        this.armazenamento = new Alunos_db();
+    public AlunoService(Armazenamento armazenamento) {
+        this.armazenamento = armazenamento;
     }
 
     Scanner scanner = new Scanner(System.in);
@@ -46,8 +47,36 @@ public class AlunoService implements Acoes {
         System.out.println("Digite o curso do aluno: ");
         String curso = scanner.nextLine();
 
-        Aluno aluno = new Aluno(nome, endereco, email, telefone, matricula, periodo, curso);
-        armazenamento.adicionar(aluno);
+        System.out.println("Escolha as disciplinas: ");
+
+        ArrayList<Disciplina> disciplinas = armazenamento.getDisciplinas();
+
+        // Exibição das disciplinas
+        int count = 1;
+        for (Disciplina disciplina : disciplinas) {
+            System.out.println(count + ". Nome: " + disciplina.getNome());
+            System.out.println("--------------------");
+            count++;
+        }
+
+        // Solicita as escolhas do usuário
+        System.out.print("Selecione os números (separados por vírgula): ");
+        String input = scanner.nextLine();
+
+        // Processa as escolhas
+        String[] indicesEscolhidos = input.split(",");
+        ArrayList<Disciplina> disciplinasEscolhidas = new ArrayList<>();
+
+        // Adiciona as disciplinas escolhidas ao ArrayList
+        for (String indiceStr : indicesEscolhidos) {
+            int indice = Integer.parseInt(indiceStr.trim()) - 1;
+            disciplinasEscolhidas.add(disciplinas.get(indice));
+        }
+
+        Aluno aluno = new Aluno(nome, endereco, email, telefone, matricula, periodo, curso, disciplinasEscolhidas);
+        armazenamento.adicionarAluno(aluno);
+        System.out.println("ALUNO CADASTRADO!");
+        System.out.println("--------------------");
     }
 
     @Override
@@ -69,13 +98,13 @@ public class AlunoService implements Acoes {
 
         // Se caso existir o aluno, remove ele
         if (alunoARemover != null) {
-            armazenamento.remover(alunoARemover);
+            armazenamento.removerAluno(alunoARemover);
             System.out.println("--------------------");
-            System.out.println("Aluno removido.");
+            System.out.println("ALUNO REMOVIDO");
             System.out.println("--------------------");
         } else {
             System.out.println("--------------------");
-            System.out.println("Aluno com matrícula " + matricula + " não encontrado.");
+            System.out.println("ALUNO COM MATRÍCULA " + matricula + " NÃO ENCONTRADO");
             System.out.println("--------------------");
         }
     }
@@ -86,13 +115,13 @@ public class AlunoService implements Acoes {
 
         if (alunos == null || alunos.isEmpty()) {
             System.out.println("--------------------");
-            System.out.println("Nenhum aluno encontrado.");
+            System.out.println("NENHUM ALUNO ENCONTRADO");
             System.out.println("--------------------");
             return;
         }
 
-        System.out.println("Relatório dos Alunos:");
-
+        System.out.println("RELATÓRIO DOS ALUNOS");
+        System.out.println();
         for (Aluno aluno : alunos) {
             System.out.println(aluno.toString());
             System.out.println("--------------------");

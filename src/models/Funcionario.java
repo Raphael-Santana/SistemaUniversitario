@@ -7,6 +7,7 @@ public abstract class Funcionario extends Pessoa {
     public Funcionario(String nome, String endereco, String email, int telefone, int horarioTrabalho) {
         super(nome, endereco, email, telefone);
         this.horarioTrabalho = horarioTrabalho;
+        this.salario = 0;
     }
 
     // Metodo abstrato para definição de salário
@@ -27,4 +28,14 @@ public abstract class Funcionario extends Pessoa {
     public void setHorarioTrabalho(int horarioTrabalho) {
         this.horarioTrabalho = horarioTrabalho;
     }
+
+    @Override
+    public String toString() {
+        // Apenas retorna o nome ou outro atributo que você deseja exibir
+        return  super.toString() +
+                " / Salário: R$ " + this.salario;
+    }
 }
+
+
+

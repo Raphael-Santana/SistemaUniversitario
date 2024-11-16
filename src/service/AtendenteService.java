@@ -1,6 +1,6 @@
 package service;
 
-import armazenamento.Atendente_db;
+import armazenamento.Armazenamento;
 import models.Atendente;
 
 import java.util.ArrayList;
@@ -8,11 +8,11 @@ import java.util.Scanner;
 
 public class AtendenteService implements Acoes {
 
-    private final Atendente_db armazenamento;
+    private final Armazenamento armazenamento;
 
     // Construtor
-    public AtendenteService() {
-        this.armazenamento = new Atendente_db();
+    public AtendenteService(Armazenamento armazenamento) {
+        this.armazenamento = armazenamento;
     }
 
     Scanner scanner = new Scanner(System.in);
@@ -46,7 +46,9 @@ public class AtendenteService implements Acoes {
 
         Atendente atendente = new Atendente(nome, endereco, email, telefone, horarioTrabalho, responsabilidade);
         atendente.definirSalario(salario);
-        armazenamento.adicionar(atendente);
+        armazenamento.adicionarAtendente(atendente);
+        System.out.println("ATENDENTE CADASTRADO");
+        System.out.println("--------------------");
     }
 
     @Override
@@ -68,13 +70,13 @@ public class AtendenteService implements Acoes {
 
         // Se o atendente existir, remove-o
         if (atendenteARemover != null) {
-            armazenamento.remover(atendenteARemover);
+            armazenamento.removerAtendente(atendenteARemover);
             System.out.println("--------------------");
-            System.out.println("Atendente removido.");
+            System.out.println("ATENDENTE REMOVIDO");
             System.out.println("--------------------");
         } else {
             System.out.println("--------------------");
-            System.out.println("Atendente com e-mail " + email + " não encontrado.");
+            System.out.println("ATENDENTE COM EMAIL " + email + " NÃO ENCONTRADO");
             System.out.println("--------------------");
         }
     }
@@ -85,12 +87,13 @@ public class AtendenteService implements Acoes {
 
         if (atendentes == null || atendentes.isEmpty()) {
             System.out.println("--------------------");
-            System.out.println("Nenhum atendente encontrado.");
+            System.out.println("NENHUM ATENDENTE ENCONTRADO");
             System.out.println("--------------------");
             return;
         }
 
-        System.out.println("Relatório dos atendentes:");
+        System.out.println("RELATÓRIO DOS ATENDENTES: ");
+        System.out.println();
 
         for (Atendente atendente : atendentes) {
             System.out.println(atendente.toString());

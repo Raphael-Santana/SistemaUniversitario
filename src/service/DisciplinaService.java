@@ -1,17 +1,19 @@
 package service;
 
-import armazenamento.Disciplina_db;
+import armazenamento.Armazenamento;
+import models.Curso;
 import models.Disciplina;
+import models.Professor;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DisciplinaService implements Acoes{
 
-    private final Disciplina_db armazenamento;
+    private final Armazenamento armazenamento;
 
-    public DisciplinaService(){
-        this.armazenamento = new Disciplina_db();
+    public DisciplinaService(Armazenamento armazenamento) {
+        this.armazenamento = armazenamento;
     }
 
     Scanner scanner = new Scanner(System.in);
@@ -28,17 +30,41 @@ public class DisciplinaService implements Acoes{
         System.out.println("Digite a carga horária da disciplina: ");
         String cargaHoraria = scanner.nextLine();
 
-        System.out.println("Digite o nome do professor responsável: ");
-        String professorResponsavel = scanner.nextLine();
+        System.out.println("Professor responsável: ");
+        ArrayList<Professor> professores = armazenamento.getProfessores();
 
-        System.out.println("Digite o curso relacionado à disciplina: ");
-        String cursoRelacionado = scanner.nextLine();
+        int count = 1;
+        for (Professor professor : professores) {
+            System.out.println(count + ". Nome: " + professor.getNome());
+            System.out.println("--------------------");
+            count++;
+        }
+        System.out.println("Selecione o número: ");
+
+        int indiceProfessorResponsavel = scanner.nextInt();
+        Professor professorResponsavelEscolhido = professores.get(indiceProfessorResponsavel - 1);
+
+        System.out.println("Qual o curso relacionado à disciplina: ");
+        ArrayList<Curso> cursos = armazenamento.getCursos();
+
+        count = 1;
+        for (Curso curso : cursos) {
+            System.out.println(count + ". Nome: " + curso.getNome());
+            System.out.println("--------------------");
+            count++;
+        }
+        System.out.println("Selecione o número: ");
+
+        int indiceCurso = scanner.nextInt();
+        Curso cursoEscolhido = cursos.get(indiceCurso - 1);
 
         System.out.println("Digite a quantidade de créditos da disciplina: ");
         int quantidadeCreditos = scanner.nextInt();
 
-        Disciplina disciplina = new Disciplina(nome, codigo, cargaHoraria, professorResponsavel, cursoRelacionado, quantidadeCreditos);
-        armazenamento.adicionar(disciplina);
+        Disciplina disciplina = new Disciplina(nome, codigo, cargaHoraria, professorResponsavelEscolhido, cursoEscolhido, quantidadeCreditos);
+        armazenamento.adicionarDisciplina(disciplina);
+        System.out.println("DISCIPLINA CADASTRADA");
+        System.out.println("--------------------");
     }
     @Override
     public void remover(){
@@ -56,13 +82,13 @@ public class DisciplinaService implements Acoes{
         }
 
         if(disciplinaARemover != null){
-            armazenamento.remover(disciplinaARemover);
+            armazenamento.removerDisciplina(disciplinaARemover);
             System.out.println("--------------------");
-            System.out.println("Disciplina removida.");
+            System.out.println("DISCIPLINA REMOVIDA");
             System.out.println("--------------------");
         } else{
             System.out.println("--------------------");
-            System.out.println("Disciplina com código " + codigo + " não encontrado!");
+            System.out.println("DISCIPLINA COM CÓDIGO " + codigo + " NÃO ENCONTRADO");
             System.out.println("--------------------");
         }
 
@@ -74,13 +100,13 @@ public class DisciplinaService implements Acoes{
 
         if(disciplinas == null || disciplinas.isEmpty()){
             System.out.println("--------------------");
-            System.out.println("Nenhuma disciplina encontrada.");
+            System.out.println("NENHUMA DISCIPLINA ENCONTRADA");
             System.out.println("--------------------");
             return;
         }
 
-        System.out.println("Relatório de Disciplinas: ");
-
+        System.out.println("RELATÓRIO DAS DISCIPLINAS: ");
+        System.out.println();
         for(Disciplina disciplina:disciplinas){
             System.out.println(disciplina.toString());
             System.out.println("--------------------");
